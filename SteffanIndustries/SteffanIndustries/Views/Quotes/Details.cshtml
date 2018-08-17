@@ -1,0 +1,119 @@
+@model SteffanIndustries.Models.Quote
+
+@{
+    ViewData["Title"] = "Quote Details";
+}
+
+<h2>Quote Details</h2>
+
+<div>
+    <h4>Quote</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.QuoteDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.QuoteDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLine1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddressLine1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AddressLine2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AddressLine2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Zip)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Zip)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contact)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContactEmail)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactPhone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContactPhone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobScope)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobScope)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobCost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.QuoteNote)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Sequence</th>
+                    <th>Note</th>
+                </tr>
+                @foreach (var item in Model.QuoteNote)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NoteNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.QuoteID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

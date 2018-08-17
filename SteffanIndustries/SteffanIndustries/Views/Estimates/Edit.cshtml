@@ -1,0 +1,115 @@
+@model SteffanIndustries.Models.Estimate
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Estimate</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="EstimateID" />
+        <div class="form-group">
+            <label asp-for="EstimateDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="EstimateDate" class="form-control" />
+                <span asp-validation-for="EstimateDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="JobName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="JobName" class="form-control" />
+                <span asp-validation-for="JobName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Scope" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Scope" class="form-control" />
+                <span asp-validation-for="Scope" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Contact" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Contact" class="form-control" />
+                <span asp-validation-for="Contact" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    <fieldset>
+        <legend>Estimate Details</legend>
+
+        @if (Model.EstimateDetail == null || Model.EstimateDetail.Count == 0)
+        {
+            <p>None.</p>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <td>Category</td>
+                    <td>Description</td>
+                    <td>Rate</td>
+                    <td>UOM</td>
+                    <td>Qty</td>
+                    <td>Workers</td>
+                    <td>Days</td>
+                    <td>Markup %</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+                @for (int i = 0; i < Model.EstimateDetail.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDetail[i].Category)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDetail[i].Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDetail[i].Rate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDetail[i].UOM)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDetail[i].UOMQuantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDetail[i].NumberOfWorkers)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDetail[i].NumberOfDays)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDetail[i].Markup)
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+
+    </fieldset>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+    <a href="#">Add another</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

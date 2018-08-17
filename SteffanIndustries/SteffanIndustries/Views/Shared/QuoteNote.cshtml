@@ -1,0 +1,27 @@
+﻿@using HtmlHelpers.BeginCollectionItemCore;
+@model SteffanIndustries.Models.ViewModels.QuoteNote
+
+<div class="editorRow">
+    @using (Html.BeginCollectionItem("QuoteNotes"))
+    {
+        <div class="ui-grid-c ui-responsive">
+            <div class="ui-block-a">
+                <span>
+                    @Html.TextBoxFor(m => m.NoteNumber)
+                </span>
+            </div>
+            <div class="ui-block-b">
+                <span>
+                    @Html.TextBoxFor(m => m.Note)
+                </span>
+            </div>
+            <div class="ui-block-c">
+                <span>
+                    <span class="dltBtn">
+                        <a href="#" class="deleteRow">X</a>
+                    </span>
+                </span>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,53 @@
+@model IEnumerable<SteffanIndustries.Models.Estimate>
+
+@{
+    ViewData["Title"] = "Estimates";
+}
+
+<h2>Estimates</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.EstimateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.JobName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Scope)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Contact)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstimateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Scope)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EstimateID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EstimateID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EstimateID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

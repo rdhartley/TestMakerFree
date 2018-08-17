@@ -1,0 +1,129 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <script type="text/javascript">
+
+        function CalculateTotals() {
+            var gv = document.getElementById("<%= GridView1.ClientID %>");
+            var tb = gv.getElementsByTagName("input");
+            var lb = gv.getElementsByTagName("span");
+
+            var sub = 0;
+            var total = 0;
+            var indexQ = 1;
+            var indexP = 0;
+            var price = 0;
+            var qty = 0;
+            var totalQty = 0;
+            var tbCount = tb.length / 2;
+
+            for (var i = 0; i < tbCount; i++) {
+
+                if (tb[i].type == "text") {
+                    ValidateNumber(tb[i + indexQ]);
+
+                    sub = parseFloat(tb[i + indexP].value) * parseFloat(tb[i + indexQ].value);
+
+                    if (isNaN(sub)) {
+                        lb[i].innerHTML = "0.00";
+                        sub = 0;
+                    }
+                    else {
+                        lb[i].innerHTML = FormatToMoney(sub, "$", ",", ".");;
+                    }
+
+                    if (isNaN(tb[i + indexQ].value) || tb[i + indexQ].value == "") {
+                        qty = 0;
+                    }
+                    else {
+                        qty = tb[i + indexQ].value;
+                    }
+
+                    totalQty += parseInt(qty);
+                    total += parseFloat(sub);
+
+                    indexQ++;
+                    indexP++;
+                }
+            }
+
+            lb[lb.length - 2].innerHTML = totalQty;
+            lb[lb.length - 1].innerHTML = FormatToMoney(total, "$", ",", ".");
+        }
+
+        function ValidateNumber(o) {
+            if (o.value.length > 0) {
+                o.value = o.value.replace(/[^\d]+/g, ''); //Allow only whole numbers
+            }
+        }
+        function isThousands(position) {
+            if (Math.floor(position / 3) * 3 == position) return true;
+            return false;
+        };
+
+        function FormatToMoney(theNumber, theCurrency, theThousands, theDecimal) {
+            var theDecimalDigits = Math.round((theNumber * 100) - (Math.floor(theNumber) * 100));
+            theDecimalDigits = "" + (theDecimalDigits + "0").substring(0, 2);
+            theNumber = "" + Math.floor(theNumber);
+            var theOutput = theCurrency;
+            for (x = 0; x < theNumber.length; x++) {
+                theOutput += theNumber.substring(x, x + 1);
+                if (isThousands(theNumber.length - x - 1) && (theNumber.length - x - 1 != 0)) {
+                    theOutput += theThousands;
+                };
+            };
+            theOutput += theDecimal + theDecimalDigits;
+            return theOutput;
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:gridview ID="GridView1" runat="server" ShowFooter="true"
+                                 AutoGenerateColumns="false">
+        <Columns>
+        <asp:BoundField DataField="RowNumber" HeaderText="Row Number" />
+        <asp:BoundField DataField="Description" HeaderText="Item Description" />
+        <asp:TemplateField HeaderText="Item Price">
+            <ItemTemplate>
+                <asp:TextBox ID="TXTPrice" runat="server" 
+                             onkeyup="CalculateTotals();"></asp:TextBox>
+            </ItemTemplate>
+            <FooterTemplate>
+                <b>Total Qty:</b>
+            </FooterTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Quantity">
+            <ItemTemplate>
+                <asp:TextBox ID="TXTQty" runat="server" 
+                             onkeyup="CalculateTotals();"></asp:TextBox>
+            </ItemTemplate>
+            <FooterTemplate>
+                <asp:Label ID="LBLQtyTotal" runat="server" 
+                           Font-Bold="true" ForeColor="Blue" Text="0" />
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>Total Amount:</b>
+            </FooterTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Sub-Total">
+            <ItemTemplate>
+                <asp:Label ID="LBLSubTotal" runat="server" 
+                           ForeColor="Green" Text="0.00"></asp:Label>
+            </ItemTemplate>
+            <FooterTemplate>
+                <asp:Label ID="LBLTotal" runat="server" 
+                           ForeColor="Green" Font-Bold="true" Text="0.00"/>
+            </FooterTemplate>
+        </asp:TemplateField>
+        </Columns>
+    </asp:gridview>
+    </form>
+</body>
+</html>
+
+

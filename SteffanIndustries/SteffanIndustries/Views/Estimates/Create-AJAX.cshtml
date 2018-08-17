@@ -1,0 +1,364 @@
+@model SteffanIndustries.Models.Estimate
+
+@{
+
+    <style>
+        span.error {
+            display: block;
+            visibility: hidden;
+            color: red;
+            font-size: 90%;
+        }
+
+
+        /*css for table*/
+        .container td {
+            vertical-align: top;
+        }
+
+        .tablecontainer table {
+            width: 100%;
+            border-collapse: collapse;
+            border-top: 1px solid #BFAEAE;
+            border-right: 1px solid #BFAEAE;
+        }
+
+        .tablecontainer th {
+            border-bottom: 2px solid #BFAEAE !important;
+        }
+
+        .tablecontainer th, .tablecontainer td {
+            text-align: left;
+            border-left: 1px solid #BFAEAE;
+            padding: 5px;
+            border-bottom: 1px solid #BFAEAE;
+        }
+
+        .ui-widget {
+            font-size: 12px !important;
+        }
+    </style>
+}
+
+
+<h2 class="h2">@ViewBag.Title</h2>
+
+
+
+
+<div class="container" style="max-width:640px">
+    <div class="master">
+        <h4>Estimate</h4>
+        <table>
+            <tr>
+                <td>Estimate Date </td>
+                <td>
+                    <input type="text" id="EstimateDate" />
+                    <span class="error">Valid Estimate Date required  (ex. MM-dd-yyyy)</span>
+                </td>
+                <td>Contact </td>
+                <td>
+                    <input type="text" id="Contact" />
+                    <span class="error">Contact required</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Job Name </td>
+                <td colspan="3">
+                    <textarea id="JobName" style="width:100%"></textarea>
+                    <span class="error">Job Name required</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Job Scope </td>
+                <td colspan="3">
+                    <textarea id="Scope" rows="5" style="width:100%"></textarea>
+                    <span class="error">Scope required</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="details">
+        <h4>Estimate Details</h4>
+        <table class="display">
+            <tr>
+                <td>Category</td>
+                <td>Description</td>
+                <td>Rate</td>
+                <td>UOM</td>
+                <td>Qty</td>
+                <td>Workers</td>
+                <td>Days</td>
+                <td>Markup</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" id="Category" />
+                    <span class="error">Category required</span>
+                </td>
+                <td>
+                    <input type="text" id="Description" />
+                    <span class="error">Description required</span>
+                </td>
+                <td>
+                    <input type="text" id="Rate" />
+                    <span class="error">Rate required</span>
+                </td>
+                <td>
+                    <input type="text" id="UOM" />
+                    <span class="error">UOM required</span>
+                </td>
+                <td>
+                    <input type="text" id="UOMQuantity" />
+                    <span class="error">UOMQuantity required</span>
+                </td>
+                <td>
+                    <input type="text" id="NumberOfWorkers" />
+                    <span class="error">NumberOfWorkers required</span>
+                </td>
+                <td>
+                    <input type="text" id="NumberOfDays" />
+                    <span class="error">NumberOfDays required</span>
+                </td>
+                <td>
+                    <input type="text" id="Markup" />
+                    <span class="error">Markup required</span>
+                </td>
+                <td>
+                    <input type="button" id="add" value="add" />
+                </td>
+            </tr>
+        </table>
+        <div id="estimateDetail" class="tablecontainer">
+        </div>
+        <div style="padding:10px 0px; text-align:right">
+            <input id="submit" type="button" value="Save" style="padding:10px 20px" />
+        </div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    <script language="javascript" type="text/javascript">
+    //Date Picker
+    $(function () {
+         $('#EstimateDate').datepicker({
+            dateFormat: 'mm-dd-yy'
+         });
+    });
+
+
+    $(document).ready(function () {
+        var estimateDetail = [];
+
+        // this function is used to add item to list table
+        $('#add').click(function () {
+            // Check to make sure the data has been entered
+            var isValidItem = true;
+            if ($('#Category').val().trim() == '') {
+                isValidItem = false;
+                $('#Category').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Category').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#Description').val().trim() == '') {
+                isValidItem = false;
+                $('#Description').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Description').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if (!($('#Rate').val().trim() != '' && !isNaN($('#Rate').val().trim()))) {
+                isValidItem = false;
+                $('#Rate').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Rate').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#UOM').val().trim() == '') {
+                isValidItem = false;
+                $('#UOM').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#UOM').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if (!($('#UOMQuantity').val().trim() != '' && !isNaN($('#UOMQuantity').val().trim()))) {
+                isValidItem = false;
+                $('#UOMQuantity').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#UOMQuantity').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if (!($('#NumberOfWorkers').val().trim() != '' && !isNaN($('#NumberOfWorkers').val().trim()))) {
+                isValidItem = false;
+                $('#NumberOfWorkers').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#NumberOfWorkers').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if (!($('#NumberOfDays').val().trim() != '' && !isNaN($('#NumberOfDays').val().trim()))) {
+                isValidItem = false;
+                $('#NumberOfDays').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#NumberOfDays').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if (!($('#Markup').val().trim() != '' && !isNaN($('#Markup').val().trim()))) {
+                isValidItem = false;
+                $('#Markup').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Markup').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            //Add item to list if valid
+            if (isValidItem) {
+                // Adding item to table
+                estimateDetail.push({
+                    Category: $('#Category').val().trim(),
+                    Description: $('#Description').val().trim(),
+                    Rate: parseFloat($('#Rate').val().trim()),
+                    UOM: $('#UOM').val().trim(),
+                    UOMQuantity: parseInt($('#UOMQuantity').val().trim()),
+                    NumberOfWorkers: parseInt($('#NumberOfWorkers').val().trim()),
+                    NumberOfDays: parseInt($('#NumberOfDays').val().trim()),
+                    Markup: parseFloat($('#Markup').val().trim()),
+                    TotalAmount: parseInt($('#UOMQuantity').val().trim()) * parseFloat($('#Rate').val().trim())
+                });
+
+                // Clear the fields
+                $('#Category').val("").focus();
+                $('#Description').val("");
+                $('#Rate').val("");
+                $('#UOM').val("");
+                $('#UOMQuantity').val("");
+                $('#NumberOfWorkers').val("");
+                $('#NumberOfDays').val("");
+                $('#Markup').val("");
+            }
+            //populate order items
+            GeneratedItemsTable();
+
+        });
+
+        //This function is used for sending data(JSON Data) to EstimatesController
+        //Save button click function
+        $('#submit').click(function () {
+            //validation of order
+            var isAllValid = true;
+            if (estimateDetail.length == 0) {
+                $('#estimateDetail').html('<span style="color:red;">Please add estimate detail lines</span>');
+                isAllValid = false;
+            }
+
+            if ($('#EstimateDate').val().trim() == '') {
+                isAllValid = false;
+                $('#EstimateDate').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#EstimateDate').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#Contact').val().trim() == '') {
+                isAllValid = false;
+                $('#Contact').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Contact').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#JobName').val().trim() == '') {
+                isAllValid = false;
+                $('#JobName').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#JobName').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#Scope').val().trim() == '') {
+                isAllValid = false;
+                $('#Scope').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Scope').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            //Save if valid
+            if (isAllValid) {
+                var data = {
+                    EstimateDate: $('#EstimateDate').val().trim(),
+                    Contact: $('#Contact').val().trim(),
+                    JobName: $('#JobName').val().trim(),
+                    Scope: $('#Scope').val().trim(),
+                    EstimateDetail: estimateDetail
+                }
+
+                $(this).val('Please wait...');
+
+                $.ajax({
+                    url:  '@Url.Action("Create","Estimates")',
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    dataType: "JSON",
+                    contentType: "application/json",
+                    success: function () {
+                            alert('Estimate Added.');
+                            //clear form
+                            estimateDetail = [];
+                            $('#EstimateDate').val('');
+                            $('#Contact').val('');
+                            $('#JobName').val('');
+                            $('#Scope').val('');
+                            $('#estimateDetail').empty();
+                            $('#submit').val('Save');
+                    },
+                    error: function () {
+                        alert('Error. Please try again.');
+                       $('#submit').val('Save');
+                   }
+                });
+            }
+
+        });
+
+
+        //function for show added items in table
+        function GeneratedItemsTable() {
+                if (estimateDetail.length > 0) {
+                    var $table = $('<table/>');
+                    $table.append('<thead><tr><th>Category</th><th>Description</th><th>Rate</th><th>UOM</th><th>Qty</th><th>Workers</th><th>Days</th><th>Markup %</th><th> Total</th></tr ></thead > ');
+                    var $tbody = $('<tbody/>');
+                    $.each(estimateDetail, function (i, val) {
+                        var $row = $('<tr/>');
+                        $row.append($('<td/>').html(val.Category));
+                        $row.append($('<td/>').html(val.Description));
+                        $row.append($('<td/>').html(val.Rate));
+                        $row.append($('<td/>').html(val.UOM));
+                        $row.append($('<td/>').html(val.UOMQuantity));
+                        $row.append($('<td/>').html(val.NumberOfWorkers));
+                        $row.append($('<td/>').html(val.NumberOfDays));
+                        $row.append($('<td/>').html(val.Markup));
+                        $row.append($('<td/>').html(val.TotalAmount));
+                        $tbody.append($row);
+                    });
+                    $table.append($tbody);
+                    $('#estimateDetail').html($table);
+                }
+            }
+        });
+
+    </script>
+}

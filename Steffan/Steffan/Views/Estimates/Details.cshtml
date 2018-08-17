@@ -1,0 +1,107 @@
+﻿@model SteffanIndustries.Models.Estimate
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Estimate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EstimateDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstimateDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Scope)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Scope)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contact)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactPhone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ContactPhone)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EstimateDetails)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th> </th>
+                    <th>Description</th>
+                    <th>Rate</th>
+                    <th>UOM</th>
+                    <th>Qty</th>
+                    <th>Resources</th>
+                    <th>Cost</th>
+                    <th>Markup</th>
+                </tr>
+                @foreach (var item in Model.EstimateDetails)
+                {
+                    <tr>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.RentalCompany))
+                            {
+                                @Html.DisplayFor(m => item.RentalCompany)
+                            }
+                            else if (item.Trade != null)
+                            {
+                                @Html.DisplayFor(m => item.Trade)
+                            }
+                            else 
+                            {
+                                @Html.DisplayFor(m => item.Category)
+                            }
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Rate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.UOM)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.UOMQuantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.NumberOfWorkers)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Cost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.Markup)
+                        </td>
+                    </tr>
+
+                }
+            </table>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

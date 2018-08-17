@@ -1,0 +1,131 @@
+@model SteffanIndustries.Models.Quote
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+@*@using (Html.BeginForm("Create", "Quote", FormMethod.Post, new { id = "home-view", @class = "english-form", enctype = "multipart/form-data" }))*@
+
+<form asp-action="Create", enctype = "multipart/form-data">
+    <div class="form-horizontal">
+        <h4>Quote</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="QuoteDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="QuoteDate" class="form-control" />
+                <span asp-validation-for="QuoteDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CompanyName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AddressLine1" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="AddressLine1" class="form-control" />
+                <span asp-validation-for="AddressLine1" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AddressLine2" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="AddressLine2" class="form-control" />
+                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="City" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="State" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="State" class="form-control" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Zip" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Zip" class="form-control" />
+                <span asp-validation-for="Zip" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Contact" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Contact" class="form-control" />
+                <span asp-validation-for="Contact" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactEmail" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ContactEmail" class="form-control" />
+                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ContactPhone" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ContactPhone" class="form-control" />
+                <span asp-validation-for="ContactPhone" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="JobName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="JobName" class="form-control" />
+                <span asp-validation-for="JobName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="JobScope" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input  asp-for="JobScope" class="form-control" />
+                <span asp-validation-for="JobScope" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="JobCost" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="JobCost" class="form-control" />
+                <span asp-validation-for="JobCost" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div id="collectionItems">
+            {
+                @for (int i = 0; i < @Model.QuoteNote.Count(); i++)
+                {
+                    @Html.EditorFor(model => @Model.QuoteNote[i])
+                }
+            }
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

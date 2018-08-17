@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="jumbotron">
+    <h1>Steffan Industries</h1>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Welcome to Steffan Industries</h2>
+        <p>
+            Steffan Industries is a prototype application that
+            demonstrates how Steffan Industries, Inc. project could
+            be implemented.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Examples</h2>
+        <p>The example documents were from the paper trail given to DATAMed for reference.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Caution</h2>
+        <p>This is not a complete application.  This is for demonstration only.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Estimates</h2>
+        <p>
+            Estimates can  be done in the field during the initial walkthrough
+        </p>
+        <a asp-area="" asp-controller="Estimates" asp-action="Index">Estimates</a>
+    </div>
+    <div class="col-md-4">
+        <h2>Quotes</h2>
+        <p>Once an estimate is completed and verified, a quote is generated for the 
+        potential customer.</p>
+        <a asp-area="" asp-controller="Quotes" asp-action="Index">Quotes</a>
+    </div>
+    
+</div>
